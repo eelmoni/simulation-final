@@ -6,6 +6,8 @@ export default class Uniform {
     this.b = b;
     this.values = values || undefined;
     this.lastIndexUsed = 0;
+    this.RND = undefined;
+    this.X = undefined;
   }
 
   // Gets distribution name
@@ -28,7 +30,20 @@ export default class Uniform {
   // Calculate distribution value
   calculateDistribution() {
     const RND = this.getRandomNumber();
+    const x = this.a + RND * (this.b - this.a);
 
-    return this.a + RND * (this.b - this.a);
+    this.RND = RND;
+    this.X = x;
+
+    return x;
+  }
+
+  renderRow() {
+    return (
+      <>
+        <td>{this.RND}</td>
+        <td>{this.X}</td>
+      </>
+    );
   }
 }

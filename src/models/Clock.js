@@ -6,4 +6,16 @@ export default class Clock {
   setClock(num) {
     this.currentValue = num;
   }
+
+  getClockTime() {
+    return this.currentValue;
+  }
+
+  renderFirstRowHeader() {
+    return (<th key={'clock'} rowSpan="2">Reloj</th>);
+  }
+
+  renderRow() {
+    return (<td key={'clock'}>{this.currentValue}</td>);
+  }
 }

@@ -6,6 +6,9 @@ export default class NegativeExponential {
     this.lambda = lambda || undefined;
     this.values = values || undefined;
     this.lastIndexUsed = 0;
+    this.RND = undefined;
+    this.X = undefined;
+    this.VALUE_WITH_CLOCK = undefined;
   }
 
   // Gets distribution name
@@ -36,6 +39,18 @@ export default class NegativeExponential {
       x = (-1 / this.lambda) * Math.log(1 - RND);
     }
 
+    this.RND = RND;
+    this.X = x;
+
     return x;
+  }
+
+  renderRow() {
+    return (
+      <>
+        <td>{this.RND}</td>
+        <td>{this.X}</td>
+      </>
+    );
   }
 }

@@ -11,6 +11,7 @@ export default class Normal {
     this.counter = 1;
     this.RND1 = undefined;
     this.RND2 = undefined;
+    this.X = undefined;
   }
 
   // Gets distribution name
@@ -20,10 +21,6 @@ export default class Normal {
 
   // Gets two random number between 0 and 0.99
   getRandomNumber() {
-    // 1
-    // 2 los mismos
-    // 3
-    // 4 los mismos
     if (!!this.RND1 && !!this.RND2 && isPair(this.counter)) {
       this.counter = this.counter + 1;
 
@@ -66,6 +63,18 @@ export default class Normal {
       this.useCOS = true;
     }
 
+    this.X = x;
+
     return x;
+  }
+
+  renderRow() {
+    return (
+      <>
+        <td>{this.RND1}</td>
+        <td>{this.RND2}</td>
+        <td>{this.X}</td>
+      </>
+    );
   }
 }

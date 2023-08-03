@@ -1,8 +1,9 @@
 export default class Queue {
-  constructor() {
+  constructor({ name }) {
     this.items = {};
     this.headIndex = 0;
     this.tailIndex = 0;
+    this.name = name;
   }
 
   // Adds a new element
@@ -44,6 +45,14 @@ export default class Queue {
     this.items = {};
     this.headIndex = 0;
     this.tailIndex = 0;
+  }
+
+  renderFirstRowHeader() {
+    return (<th key={`${this.name}`} rowSpan="2">{this.name}</th>);
+  }
+
+  renderRow() {
+    return (<td key={`${this.name}`}>{this.size()}</td>);
   }
 }
 
