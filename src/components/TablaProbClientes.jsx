@@ -86,8 +86,8 @@ function TablaProbClientes({ RO, cantidadClientes }) {
             <tr>
               <th>{"n"}</th>
               <th>{"Pn"}</th>
-              <th>{"P(N>=k)"}</th>
-              <th>{"P(N<k)"}</th>
+              <th>{"P(N>=k) = ρ^k"}</th>
+              <th>{"P(N<k) = 1 - ρ^k"}</th>
             </tr>
           </thead>
           <tbody>{filas}</tbody>
