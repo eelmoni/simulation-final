@@ -21,6 +21,7 @@ export default function LeyLittleForm({ onFormSubmit }) {
     }
 
     onFormSubmit({
+      cantidadClientes: parseInt(data.cantidadClientes, 10),
       cantidadPaquetes: parseInt(data.cantidadPaquetes, 10),
       cantidadServidores: parseInt(data.cantidadServidores, 10),
       lambda: parseFloat(finalLambda),
@@ -41,7 +42,6 @@ export default function LeyLittleForm({ onFormSubmit }) {
         variant="outline"
         fullWidth
         {...register("lambda", { pattern: /^\d+(\.\d+)?$/ })}
-        // error={Boolean(errors.lambda)}
         helperText={
           errors.lambda ? "Este campo es requerido y debe ser un número." : ""
         }
@@ -52,7 +52,6 @@ export default function LeyLittleForm({ onFormSubmit }) {
         variant="outline"
         fullWidth
         {...register("mu", { pattern: /^\d+(\.\d+)?$/ })}
-        // error={Boolean(errors.mu)}
         helperText={
           errors.mu ? "Este campo es requerido y debe ser un número." : ""
         }
@@ -80,7 +79,6 @@ export default function LeyLittleForm({ onFormSubmit }) {
         {...register("cantidadPaquetes", {
           pattern: /^[0-9]+$/,
         })}
-        // error={Boolean(errors.cantidadPaquetes)}
         helperText={
           errors.cantidadPaquetes
             ? "Este campo es requerido y debe ser un número."
@@ -95,7 +93,6 @@ export default function LeyLittleForm({ onFormSubmit }) {
         {...register("tiempoProcesamiento", {
           pattern: /^\d+(\.\d+)?$/,
         })}
-        // error={Boolean(errors.tiempoProcesamiento)}
         helperText={
           errors.tiempoProcesamiento
             ? "Este campo es requerido y debe ser un número."
@@ -110,9 +107,22 @@ export default function LeyLittleForm({ onFormSubmit }) {
         {...register("nivelConfianza", {
           pattern: /^\d+(\.\d+)?$/,
         })}
-        // error={Boolean(errors.tiempoProcesamiento)}
         helperText={
           errors.nivelConfianza
+            ? "Este campo es requerido y debe ser un número."
+            : ""
+        }
+      />
+      <Spacer y={1} />
+      <Input
+        label="Cantidad clientes (filas tabla)"
+        variant="outline"
+        fullWidth
+        {...register("cantidadClientes", {
+          pattern: /^\d+(\.\d+)?$/,
+        })}
+        helperText={
+          errors.cantidadClientes
             ? "Este campo es requerido y debe ser un número."
             : ""
         }

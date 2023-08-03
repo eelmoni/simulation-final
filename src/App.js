@@ -10,6 +10,7 @@ import {
 import "./App.css";
 import LeyLittleForm from "./components/LeyLittleForm.jsx";
 import LeyLittleTable from "./components/LeyLittleTable.jsx";
+import TablaProbClientes from "./components/TablaProbClientes.jsx";
 
 import {
   zScoreForConfidence,
@@ -23,17 +24,14 @@ import GraficoDistribucionNormal from "./components/GraficoDistribucionNormal";
 
 function App() {
   const [info, setInfo] = React.useState({});
-  const [rows, setRows] = React.useState([]);
 
   const handleSimulationInit = (data) => {
-    console.log(data);
     const {
-      cantidadPaquetes,
       cantidadServidores,
       lambda,
       mu,
-      tiempoProcesamiento,
       nivelConfianza,
+      cantidadClientes,
     } = data;
 
     const RO = calculateRO({ lambda, s: cantidadServidores, mu });
@@ -45,7 +43,6 @@ function App() {
     const Z = zScoreForConfidence(nivelConfianza);
     const capacidadTemporalAlmacenamiento = Math.ceil(Z);
 
-    console.log({ RO, L, LQ, W, WQ, Z, capacidadTemporalAlmacenamiento });
     setInfo({
       RO,
       L,
@@ -55,6 +52,9 @@ function App() {
       Z,
       capacidadTemporalAlmacenamiento,
       nivelConfianza,
+      lambda,
+      mu,
+      cantidadClientes,
     });
   };
 
@@ -125,6 +125,8 @@ function App() {
               W={info.W}
               WQ={info.WQ}
               RO={info.RO}
+              lambda={info.lambda}
+              mu={info.mu}
             />
           </Grid>
           <Grid xs={12} md={4} direction="column">
@@ -133,9 +135,11 @@ function App() {
             <ROText />
             <Spacer y={1} />
             <NivelDeConfianzaText />
+            <Spacer y={1} />
+            <GraficoDistribucionNormal zScore={info.Z} nivelConfianza={info.nivelConfianza} />
           </Grid>
           <Grid xs={12} md={12}>
-            <GraficoDistribucionNormal zScore={info.Z} nivelConfianza={info.nivelConfianza} />
+            <TablaProbClientes RO={info.RO} cantidadClientes={info.cantidadClientes}  />
           </Grid>
         </Grid.Container>
       </Container>
