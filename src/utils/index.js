@@ -73,3 +73,42 @@ export const calculateW = ({ RO, mu }) => {
 export const calculateWQ = ({ RO, mu }) => {
   return RO / (mu * (1 - RO));
 };
+
+// const calcularIntervaloConfianza = (nivelConfianza, media, desviacion) => {
+//   // Convertir el nivel de confianza a probabilidad
+//   const probabilidad = (1 + nivelConfianza / 100) / 2;
+
+//   // Calcular el valor Z correspondiente a la probabilidad
+//   const zValue = jstat.normal.inv(probabilidad, 0, 1);
+
+//   // Calcular el margen de error
+//   const margenError = zValue * desviacion;
+
+//   // Calcular el intervalo de confianza
+//   const limiteInferior = media - margenError;
+//   const limiteSuperior = media + margenError;
+
+//   return [limiteInferior, limiteSuperior];
+// }
+
+/**
+  P(X=k)=((e^−λ)⋅λ^k)/k!
+  ​P(X=k) es la probabilidad de que lleguen k paquetes en un minuto dado.
+  λ es la tasa promedio de llegada de paquetes por minuto (en este caso, 125 paquetes).
+  k es el número de paquetes que queremos calcular la probabilidad.
+  e es la base del logaritmo natural
+ */
+
+export const calcularCapacidadAlmacenamientoTemporal = (lambda, confidence) => {
+  let decimalConfidence = confidence / 100;
+  let k = 0;
+  let cumulativeProbability = 0;
+
+  while (cumulativeProbability < decimalConfidence) {
+    cumulativeProbability = jstat.poisson.cdf(k, lambda);
+    k++;
+  }
+
+  // console.log("Capacidad de almacenamiento temporal:", {lambda, confidence, k: k - 1, decimalConfidence});
+  return k - 1;
+}

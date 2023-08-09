@@ -13,14 +13,17 @@ import LeyLittleTable from "./components/LeyLittleTable.jsx";
 import TablaProbClientes from "./components/TablaProbClientes.jsx";
 
 import {
-  zScoreForConfidence,
+  // zScoreForConfidence,
   calculateRO,
   calculateL,
   calculateLQ,
   calculateW,
   calculateWQ,
+  calcularCapacidadAlmacenamientoTemporal
 } from "./utils";
-import GraficoDistribucionNormal from "./components/GraficoDistribucionNormal";
+// import GraficoDistribucionNormal from "./components/GraficoDistribucionNormal";
+// import Grafico from "./components/Grafico_Version2";
+import Grafico from "./components/Grafico_Version3";
 
 function App() {
   const [info, setInfo] = React.useState({});
@@ -35,8 +38,9 @@ function App() {
     const W = calculateW({ RO, mu });
     const WQ = calculateWQ({ RO, mu });
 
-    const Z = zScoreForConfidence(nivelConfianza);
-    const capacidadTemporalAlmacenamiento = Math.ceil(Z);
+    // const Z = zScoreForConfidence(nivelConfianza);
+    const capacidadTemporalAlmacenamiento = calcularCapacidadAlmacenamientoTemporal(lambda, nivelConfianza);
+    // const capacidadTemporalAlmacenamiento = Math.ceil(Z);
 
     setInfo({
       RO,
@@ -44,7 +48,7 @@ function App() {
       LQ,
       W,
       WQ,
-      Z,
+      // Z,
       capacidadTemporalAlmacenamiento,
       nivelConfianza,
       lambda,
@@ -91,7 +95,7 @@ function App() {
         </Text>
         <Spacer y={1} />
         <Text size={"$2xl"}>
-          {`Para un nivel de confianza ${info.nivelConfianza}%, la capacidad de almacenamiento temporal es de ${info.capacidadTemporalAlmacenamiento} paquete/s. Este valor es calculado a partir del valor Z de una distribución estándar Normal de media 0 y desviación 1.`}
+          {`Para un nivel de confianza ${info.nivelConfianza}%, la capacidad de almacenamiento temporal es de ${info.capacidadTemporalAlmacenamiento} paquete/s.`}
         </Text>
       </>
     );
@@ -101,7 +105,7 @@ function App() {
     <NextUIProvider>
       <Container>
         <Grid.Container gap={2}>
-          <Grid xs={12} md={12}>
+        <Grid xs={12} md={12}>
             <Text h2>Enunciado</Text>
           </Grid>
           <Grid xs={12} md={12}>
@@ -137,10 +141,11 @@ function App() {
             <Spacer y={1} />
             <NivelDeConfianzaText />
             <Spacer y={1} />
-            <GraficoDistribucionNormal
+            <Grafico lambda={info.lambda} k={info.capacidadTemporalAlmacenamiento} />
+            {/* <GraficoDistribucionNormal
               zScore={info.Z}
               nivelConfianza={info.nivelConfianza}
-            />
+            /> */}
           </Grid>
           <Grid xs={12} md={12}>
             <TablaProbClientes

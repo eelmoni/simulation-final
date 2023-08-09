@@ -5,7 +5,7 @@ function calcularDensidadNormal(x, media, desviacion) {
 
 // Función para calcular el intervalo de confianza basado en valores Z
 function calcularIntervaloConfianza(media, desviacion, nivelConfianza) {
-  const zValue = jStat.normal.inv(1 - (1 - nivelConfianza) / 2, 0, 1);
+  const zValue = jstat.normal.inv(1 - (1 - nivelConfianza) / 2, 0, 1);
   const margenError = zValue * desviacion;
   return [media - margenError, media + margenError];
 }
