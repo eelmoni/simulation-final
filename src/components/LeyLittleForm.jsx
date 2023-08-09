@@ -6,7 +6,11 @@ export default function LeyLittleForm({ onFormSubmit }) {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      cantidadServidores: 1
+    }
+  });
 
   const onSubmit = (data) => {
     let finalLambda = data.lambda;
@@ -19,6 +23,11 @@ export default function LeyLittleForm({ onFormSubmit }) {
     if (data.tiempoProcesamiento) {
       finalMU = (60 * 1) / data.tiempoProcesamiento;
     }
+
+    // 0.002 segundos -> 1 paquete
+    // 60 segundos -> X paquetes
+    // U = 60 * 1 / 0.002 = 30.000 paquetes / minuto
+    // L = 125 paquetes / minuto
 
     onFormSubmit({
       cantidadClientes: parseInt(data.cantidadClientes, 10),
@@ -61,6 +70,7 @@ export default function LeyLittleForm({ onFormSubmit }) {
         label="Cantidad de Servidores (s)"
         variant="outline"
         fullWidth
+        disabled
         {...register("cantidadServidores", {
           pattern: /^[0-9]+$/,
         })}

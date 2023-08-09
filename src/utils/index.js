@@ -41,7 +41,7 @@ export const asyncPubsub = pubsub.newInstance({
 });
 
 // Función para calcular el valor Z basado en un nivel de confianza en porcentaje
-export const zScoreForConfidence = (confidence) => {
+export const zScoreForConfidence = (confidence) => { // roundedL, roundedLQ
   // El nivel de confianza debe estar entre 0 y 100
   if (confidence < 0 || confidence > 100) {
     throw new Error("El nivel de confianza debe estar entre 0 y 100.");

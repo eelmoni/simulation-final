@@ -26,13 +26,8 @@ function App() {
   const [info, setInfo] = React.useState({});
 
   const handleSimulationInit = (data) => {
-    const {
-      cantidadServidores,
-      lambda,
-      mu,
-      nivelConfianza,
-      cantidadClientes,
-    } = data;
+    const { cantidadServidores, lambda, mu, nivelConfianza, cantidadClientes } =
+      data;
 
     const RO = calculateRO({ lambda, s: cantidadServidores, mu });
     const L = calculateL({ RO });
@@ -79,19 +74,25 @@ function App() {
   };
 
   const NivelDeConfianzaText = () => {
-    if (!info.nivelConfianza || !info.LQ || !info.capacidadTemporalAlmacenamiento) return null;
+    if (
+      !info.nivelConfianza ||
+      !info.LQ ||
+      !info.capacidadTemporalAlmacenamiento
+    )
+      return null;
 
     const roundedLQ = Math.ceil(info.LQ);
+    // const roundedL = Math.ceil(info.L);
 
     return (
       <>
-      <Text size={"$2xl"}>
-        {`Sin tomar en cuenta el nivel de confianza, la capacidad de almacenamiento temporal es de ${roundedLQ} paquete/s.`}
-      </Text>
-      <Spacer y={1} />
-      <Text size={"$2xl"}>
-        {`Para un nivel de confianza ${info.nivelConfianza}%, la capacidad de almacenamiento temporal es de ${info.capacidadTemporalAlmacenamiento} paquete/s. Este valor es calculado a partir del valor Z de una distribución estándar Normal de media cero y desviación 1.`}
-      </Text>
+        <Text size={"$2xl"}>
+          {`Sin tomar en cuenta el nivel de confianza, la capacidad de almacenamiento temporal es de ${roundedLQ} paquete/s.`}
+        </Text>
+        <Spacer y={1} />
+        <Text size={"$2xl"}>
+          {`Para un nivel de confianza ${info.nivelConfianza}%, la capacidad de almacenamiento temporal es de ${info.capacidadTemporalAlmacenamiento} paquete/s. Este valor es calculado a partir del valor Z de una distribución estándar Normal de media 0 y desviación 1.`}
+        </Text>
       </>
     );
   };
@@ -118,7 +119,7 @@ function App() {
           <Grid xs={12} md={4}>
             <LeyLittleForm onFormSubmit={handleSimulationInit} />
           </Grid>
-          <Grid xs={12} md={4}>
+          <Grid xs={12} md={8}>
             <LeyLittleTable
               L={info.L}
               LQ={info.LQ}
@@ -129,17 +130,23 @@ function App() {
               mu={info.mu}
             />
           </Grid>
-          <Grid xs={12} md={4} direction="column">
+          <Grid xs={12} md={8} direction="column">
             <Text h4>Conclusiones</Text>
             <Spacer y={1} />
             <ROText />
             <Spacer y={1} />
             <NivelDeConfianzaText />
             <Spacer y={1} />
-            <GraficoDistribucionNormal zScore={info.Z} nivelConfianza={info.nivelConfianza} />
+            <GraficoDistribucionNormal
+              zScore={info.Z}
+              nivelConfianza={info.nivelConfianza}
+            />
           </Grid>
           <Grid xs={12} md={12}>
-            <TablaProbClientes RO={info.RO} cantidadClientes={info.cantidadClientes}  />
+            <TablaProbClientes
+              RO={info.RO}
+              cantidadClientes={info.cantidadClientes}
+            />
           </Grid>
         </Grid.Container>
       </Container>
